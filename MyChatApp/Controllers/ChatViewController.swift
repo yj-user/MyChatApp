@@ -22,7 +22,7 @@ class ChatViewController: UIViewController {
         super.viewDidLoad()
         
         chatTableView.dataSource = self
-        title = "My Chat"
+        title = "😘 My Chat"
         navigationItem.hidesBackButton = true
         
         chatTableView.register(UINib(nibName: "MessageBubble", bundle: nil), forCellReuseIdentifier: "ReusableCell")
@@ -72,7 +72,11 @@ class ChatViewController: UIViewController {
                 print("Error adding document: \(safeError)")
             } else {
                 print("data saved")
-                self.chatTextField.text = ""
+                
+                DispatchQueue.main.async {
+                    self.chatTextField.text = ""
+                }
+                
             }
         }
     }
