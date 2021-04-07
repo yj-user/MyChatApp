@@ -13,9 +13,9 @@ class ChatViewController: UIViewController {
     @IBOutlet var chatTableView: UITableView!
     @IBOutlet var chatTextField: UITextField!
     
+    let db = Firestore.firestore()
+    
     var message: [Messages] = [
-        Messages(sender: "1@2.com", body: "This is hard"),
-        Messages(sender: "1@2.com", body: "but it's worth it")
     ]
     
     override func viewDidLoad() {
@@ -26,9 +26,51 @@ class ChatViewController: UIViewController {
         navigationItem.hidesBackButton = true
         
         chatTableView.register(UINib(nibName: "MessageBubble", bundle: nil), forCellReuseIdentifier: "ReusableCell")
+        
+        loadData()
     }
     
+    func loadData() {
+        
+        db.collection("users").getDocuments() { (querySnapshot, error) in
+            
+            self.message = []
+            
+            if let safeError = error {
+                print("Error getting documents: \(safeError)")
+            } else {
+                if let rawData = querySnapshot?.documents {
+                    for doc in rawData {
+                        let pureData = doc.data()
+                        if let messageSender = pureData["sender"] as? String, let messageBody = pureData["body"] as? String {
+                            let newMessage = Messages(sender: messageSender, body: messageBody)
+                            self.message.append(newMessage)
+                            
+                            DispatchQueue.main.async {
+                                self.chatTableView.reloadData()
+                            }
+                            
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    
     @IBAction func sendPressed(_ sender: UIButton) {
+        
+        db.collection("users").addDocument(data: [
+            "sender": Auth.auth().currentUser?.email,
+            "body": chatTextField.text,
+            
+        ]) { error in
+            if let safeError = error {
+                print("Error adding document: \(safeError)")
+            } else {
+                print("data saved")
+            }
+        }
     }
     
     @IBAction func logoutPressed(_ sender: UIBarButtonItem) {
