@@ -48,6 +48,9 @@ class ChatViewController: UIViewController {
                             
                             DispatchQueue.main.async {
                                 self.chatTableView.reloadData()
+                                
+                                let i = IndexPath(row: self.message.count - 1, section: 0)
+                                self.chatTableView.scrollToRow(at: i, at: .top, animated: true)
                             }
                             
                         }
@@ -69,6 +72,7 @@ class ChatViewController: UIViewController {
                 print("Error adding document: \(safeError)")
             } else {
                 print("data saved")
+                self.chatTextField.text = ""
             }
         }
     }
