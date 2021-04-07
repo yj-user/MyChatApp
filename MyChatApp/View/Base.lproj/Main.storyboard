@@ -108,6 +108,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9eJ-xH-fQx">
                                         <rect key="frame" x="339" y="0.0" width="21" height="35"/>
                                         <state key="normal" image="paperplane.fill" catalog="system"/>
+                                        <connections>
+                                            <action selector="sendPressed:" destination="NNE-xS-Tlm" eventType="touchUpInside" id="Iui-vf-svv"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -128,9 +131,16 @@
                             <constraint firstItem="HP0-fl-pm2" firstAttribute="bottom" secondItem="co9-tR-fq9" secondAttribute="bottom" id="iJr-Ha-OI4"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="wXa-jy-szh"/>
+                    <navigationItem key="navigationItem" id="wXa-jy-szh">
+                        <barButtonItem key="rightBarButtonItem" title="Log out" id="ufX-YE-Lee">
+                            <connections>
+                                <action selector="logoutPressed:" destination="NNE-xS-Tlm" id="wVx-8X-kYT"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="chatTableView" destination="kgP-cA-A7g" id="qnU-dT-U8O"/>
+                        <outlet property="chatTextField" destination="Y0U-Ke-9h7" id="ULo-QM-u25"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vYY-l3-eNB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

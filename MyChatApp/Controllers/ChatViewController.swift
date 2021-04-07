@@ -6,21 +6,31 @@
 //
 
 import UIKit
+import Firebase
 
 class ChatViewController: UIViewController {
     
     @IBOutlet var chatTableView: UITableView!
-  
     @IBOutlet var chatTextField: UITextField!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        title = "My Chat"
+        navigationItem.hidesBackButton = true
     }
     
     @IBAction func sendPressed(_ sender: UIButton) {
     }
     
+    @IBAction func logoutPressed(_ sender: UIBarButtonItem) {
+        let firebaseAuth = Auth.auth()
+    do {
+      try firebaseAuth.signOut()
+    } catch let signOutError as NSError {
+      print ("Error signing out: %@", signOutError)
+    }
+      
+    }
     
 }
