@@ -32,7 +32,7 @@ class ChatViewController: UIViewController {
     
     func loadData() {
         
-        db.collection("users").getDocuments() { (querySnapshot, error) in
+        db.collection("users").order(by: "time").addSnapshotListener { (querySnapshot, error) in
             
             self.message = []
             
@@ -63,7 +63,7 @@ class ChatViewController: UIViewController {
         db.collection("users").addDocument(data: [
             "sender": Auth.auth().currentUser?.email,
             "body": chatTextField.text,
-            
+            "time": Date().timeIntervalSince1970
         ]) { error in
             if let safeError = error {
                 print("Error adding document: \(safeError)")
@@ -77,6 +77,7 @@ class ChatViewController: UIViewController {
         let firebaseAuth = Auth.auth()
     do {
       try firebaseAuth.signOut()
+        navigationController?.popToRootViewController(animated: true)
     } catch let signOutError as NSError {
       print ("Error signing out: %@", signOutError)
     }
@@ -93,7 +94,24 @@ extension ChatViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableCell", for: indexPath) as! MessageBubble
         
-        cell.messageLabel.text = message[indexPath.row].body
+        let content = message[indexPath.row]
+        cell.messageLabel.text = content.body
+        
+        let sender = content.sender
+        let body = content.body
+        
+        if sender == Auth.auth().currentUser?.email {
+            cell.bubble.backgroundColor = UIColor(named: "yellow")
+            cell.messageLabel.textColor = UIColor.black
+            cell.rightImage.isHidden = false
+            cell.leftImage.isHidden = true
+        } else {
+            cell.bubble.backgroundColor = UIColor(named: "BrandLightBlue")
+            cell.messageLabel.textColor = UIColor.black
+            cell.rightImage.isHidden = true
+            cell.leftImage.isHidden = false
+        }
+        
         return cell
     }
     
