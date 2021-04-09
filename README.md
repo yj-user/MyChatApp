@@ -8,7 +8,3 @@
 
 
 
-https://user-images.githubusercontent.com/81463008/114176939-c24dc780-9976-11eb-8c82-0c70b815b728.mov
-
-
-https://user-images.githubusercontent.com/81463008/114176948-c37ef480-9976-11eb-9c77-4993a946f9fd.mov
