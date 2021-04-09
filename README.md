@@ -6,5 +6,5 @@
 3. cocoaPods 를 사용하여 메시지 창 최신화
 
 
-https://user-images.githubusercontent.com/81463008/114177765-bd3d4800-9977-11eb-9dd2-977e753c8ee6.mov
+
 
